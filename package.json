@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js",
     "build": "grunt dist",
-    "postinstall": "./node_modules/bower/bin/bower install && npm run build"
+    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
   },
   "devDependencies": {
     "grunt-npm-command": "^0.1.2",
