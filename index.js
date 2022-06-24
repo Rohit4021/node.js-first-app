@@ -8,12 +8,10 @@ const server = app.listen(process.env.PORT || 8000,async function () {
     const ProjectUuid = 'ec2d5337'
     const body = 'This audio was synthesized '
     const voiceUuid = '14ebc696'
-    const uri = 'https://pokemonxyz.herokuapp.com'
 
     await resemble.clips.createAsync(ProjectUuid, {
         body: body,
-        voice_uuid: voiceUuid,
-        callback_uri: uri
+        voice_uuid: voiceUuid
     })
 
 })
