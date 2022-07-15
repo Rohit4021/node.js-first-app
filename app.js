@@ -1,38 +1,20 @@
-{
-  "name": "projects",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "app.js"
-  },
-  "engines": {
-    "node": "16.x",
-    "npm": "6.x"
-  },
-  "dependencies": {
-    "form-data": "^4.0.0",
-    "node-fetch": "^2.6.1"
-  },
-  "devDependencies": {
-    "express": "^4.18.1",
-    "@resemble/node": "^1.2.1",
-    "@types/node": "^18.0.0",
-    "@types/jest": "^28.1.3",
-    "@types/mocha": "^9.1.1",
-    "mocha": "^7.0.2",
-    "nodemon": "^2.0.9",
-    "nyc": "^15.1.0",
-    "ts-mocha": "^8.0.0",
-    "typescript": "^4.3.5",
-    "typo-js": "^1.2.1",
-    "apify": "^2.3.2",
-    "puppeteer": "9.x",
-    "request-promise": "^4.2.6",
-    "request": "^2.88.2"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+const express = require('express')
+const puppeteer = require('puppeteer')
+const app = express()
+
+async function puppeteerF() {
+    const browser = await puppeteer.launch({headless: false})
+    const page = await browser.newPage()
+    await page.goto("https://app.resemble.ai/users/sign_in")
+
+    await page.waitForSelector("#user_email")
+    await page.waitForSelector("#user_password")
+    await page.waitForSelector(".btn.btn-primary.btn-block")
+    await page.type("#user_email", "rohitkm4021@gmail.com", { delay: 75 })
+    await page.type("#user_password", "*i*am*TIND*#1", { delay: 75 })
+    await page.click(".btn.btn-primary.btn-block")
+
+    return console.log(page.url())
 }
+
+app.listen(5000, puppeteerF)
