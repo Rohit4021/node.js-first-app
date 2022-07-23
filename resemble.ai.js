@@ -3,8 +3,9 @@ const express = require('express')
 const app = express()
 const Resemble = require('@resemble/node')
 const path = require('path')
+let port = process.env.PORT || 8080
 
-app.listen(5000, async function () {
+/*async function () {
     const resemble = new Resemble('v2', 'Yij7R3EN5zisTHQBkWV3owtt')
     const projectUuid = "5a7ed851"
     const clipUuid = "ff5ba882"
@@ -15,8 +16,10 @@ app.listen(5000, async function () {
     const audioSource = obj["item"]["audio_src"]
 
     return audioSource
-})
+}*/
 
-app.get('/', function (req, res) {
+app.get('/', (req, res) {
     res.sendFile(path.join(__dirname, '/index.html'))
 })
+
+app.listen(port, console.log("Server listening on port: ${port})) 
