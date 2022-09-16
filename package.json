@@ -1,25 +1,16 @@
 {
-  "name": "projects",
+  "name": "login",
   "version": "1.0.0",
   "description": "",
-  "main": "resemble.ai.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 1"
     "start": "node resemble.ai.js"
   },
-  "engines": {
-    "node": "16.x",
-    "npm": "6.x"
-  },
+  "author": "Rohit Kumar",
+  "license": "ISC",
   "dependencies": {
-    "form-data": "^4.0.0",
-    "node-fetch": "^2.6.1"
-  },
-  "devDependencies": {
     "express": "^4.18.1",
-    "@resemble/node": "^1.2.1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+    "puppeteer": "^17.1.3"
+  }
 }
