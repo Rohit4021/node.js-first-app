@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Voice</title>
+    <style>
+        #name {
+            width: 300px;
+            height: 50px;
+            text-align: center;
+            font-size: 18px;
+            color: red;
+            background-color: blue;
+            border-radius: 50px;
+            font-weight: bolder;
+            outline: none;
+            border: none;
+        }
+
+        #btn {
+            height: 40px;
+            width: 100px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            background-color: #83e001;
+            color: white;
+        }
+
+        @keyframes buttonColor {
+            from {
+                background-color: #83e001;
+                color: white;
+            }
+
+            to {
+                background-color: #a6a6a6;
+                color: black;
+            }
+        }
+
+        #btn:hover {
+            animation-name: buttonColor;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
+        }
+
+        ::placeholder {
+            color: rgba(204, 61, 56, 0.83);
+        }
+    </style>
+</head>
+<body>
+<center>
+<form action="/createvoice" method="post">
+    <input name="voice_name" type="text" id="name" placeholder="Enter Voice Name">
+    <br>
+    <br>
+    <button type="submit" id="btn">Create</button>
+</form>
+</center>
+</body>
+</html>
