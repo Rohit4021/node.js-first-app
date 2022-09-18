@@ -1,10 +1,14 @@
 const express = require('express')
 const app = express()
-const port = 8080 || process.env.PORT
+const port = process.env.PORT || 1000
 const fetch = require('node-fetch')
 const url = require("url");
+const bodyParser = require('body-parser')
 const puppeteer = require('puppeteer')
-const {defaultMaxListeners} = require("form-data");
+const path = require("path");
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 const splitStringSlash = (str) => {
     const string = str.split('/')
@@ -25,6 +29,20 @@ function repeat(func, times) {
 }
 
 app.get('/', (req, res) => {
+
+
+
+    res.sendFile(path.join(__dirname + '/views/index.html'))
+
+
+})
+
+app.post('/createvoice', (req, res) => {
+
+    const name = req.body.voice_name
+
+
+
     fetch("https://app.resemble.ai/voices", {
         "headers": {
             "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -44,26 +62,51 @@ app.get('/', (req, res) => {
             "Referer": "https://app.resemble.ai/voices/new",
             "Referrer-Policy": "strict-origin-when-cross-origin"
         },
-        "body": "authenticity_token=zTnQ4SKsLriSMwatX5AKMxbo7oAVaqBWXtBQT%2FqNQDcG7hJN4lVsBtIFR4eoNCMon318tkGuZOVGVRT45xhyrw%3D%3D&voice%5Bcreate_type%5D=record&voice%5Bscript_type%5D=default&voice%5Bname%5D=Rohit",
+        "body": `authenticity_token=zTnQ4SKsLriSMwatX5AKMxbo7oAVaqBWXtBQT%2FqNQDcG7hJN4lVsBtIFR4eoNCMon318tkGuZOVGVRT45xhyrw%3D%3D&voice%5Bcreate_type%5D=record&voice%5Bscript_type%5D=default&voice%5Bname%5D=${name}`,
         "method": "POST"
     }).then(async (value) => {
         const address = value.url
 
-        const browser = await puppeteer.launch({ headless: false })
+        try {
+            const browser = await puppeteer.launch({ headless: false })
 
-        const page = await browser.newPage()
+            const page = await browser.newPage()
 
-        await page.goto('https://app.resemble.ai')
-        await page.type('#user_email', 'rohitkm40021@gmail.com', { delay: 100 })
-        await page.type('#user_password', '*i*love*Naaz*#1')
-        await page.click('.btn')
-        await page.goto(address)
+            await page.goto('https://app.resemble.ai')
+            await page.type('#user_email', 'rohitkm40021@gmail.com')
+            await page.type('#user_password', '*i*love*Naaz*#1')
+            await page.click('.btn')
+            await page.goto(address)
+
+
+            await setTimeout(async () => {
+                await page.on('framenavigated', async (event) => {
+                    await browser.close()
+                    res.send('<center><h1>Congratulations,  Your voice has been Created.</h1></center>')
+                })
+            }, 2000)
+
+
+
+            if (page.url() != address) {
+                await browser.close()
+            }
+
+        } catch (e) {
+            console.log(e)
+        }
+
+
 
     }).catch((reason) => {
         console.log(reason)
     })
+
+
+
 })
 
+
 app.listen(port, () => {
-    `Listening at port : ${port}`
+    console.log(`Listening at port : ${port}`)
 })
