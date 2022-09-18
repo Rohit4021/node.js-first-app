@@ -1,1 +1,1 @@
-web: node resemble.ai.js
+web: node app.js
